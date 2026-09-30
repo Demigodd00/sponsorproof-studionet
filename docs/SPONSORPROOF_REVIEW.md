@@ -1,12 +1,12 @@
 # SponsorProof — reviewer guide
 
-The [wallet connection update](WALLET_CONNECTION_FIX.md) is available in source and locally verified. A replacement Site is being deployed because the original Site can no longer be edited from this account. Do not use the new wallet flow as public-review evidence until that deployment succeeds.
+The [wallet connection update](WALLET_CONNECTION_FIX.md) is live at the replacement Site. The original Site can no longer be edited from this account; use the new URL below for review.
 
 SponsorProof is a two-party sponsorship fulfillment protocol on GenLayer StudioNet. Sponsors and organizers lock prose deliverables, exact public evidence URLs, percentage weights and payment terms. After organizer acceptance and exact funding, the contract freezes wallet-bound publication evidence, obtains independently verified AI decisions and computes allocations deterministically. A shared appeal round, immutable decision history, held-funds resolution and pull-based claims complete the workflow.
 
 ## Deployment and source
 
-- [Replacement SponsorProof app](https://sponsorproof-studionet-wallet.prime-cake-6919.chatgpt.site/) — publication in progress on 30 September 2026.
+- [SponsorProof app](https://sponsorproof-studionet-wallet.esuspsychic.chatgpt.site/) — replacement public Site published on 30 September 2026.
 - [Intelligent contract](https://explorer-studio.genlayer.com/address/0x0235c7f7E646bA26532587aFED3108148C92Ef2f)
 - [Contract source](https://github.com/Demigodd00/sponsorproof-studionet/blob/main/contracts/sponsorproof.py)
 - [Deployment record](https://github.com/Demigodd00/sponsorproof-studionet/blob/main/deployments/sponsorproof_studionet.json)

@@ -23,7 +23,7 @@ export function makeWalletConfig() {
     chains: [studioChain],
     connectors: connectorsForWallets([{ groupName: "Connect a wallet", wallets }], {
       appName: "SponsorProof", projectId: projectId ?? "",
-      appUrl: "https://sponsorproof-studionet-wallet.prime-cake-6919.chatgpt.site",
+      appUrl: "https://sponsorproof-studionet-wallet.esuspsychic.chatgpt.site",
     }),
     multiInjectedProviderDiscovery: true,
     ssr: true,

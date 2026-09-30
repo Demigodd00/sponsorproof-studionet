@@ -2,7 +2,7 @@
 
 GenLayer-native sponsorship fulfillment, evidence review and settlement on StudioNet.
 
-[Replacement app](https://sponsorproof-studionet-wallet.prime-cake-6919.chatgpt.site/) · [Reviewer guide](docs/SPONSORPROOF_REVIEW.md) · [Contract](https://explorer-studio.genlayer.com/address/0x0235c7f7E646bA26532587aFED3108148C92Ef2f) · [Submission links](docs/SUBMISSION.md)
+[Live app](https://sponsorproof-studionet-wallet.esuspsychic.chatgpt.site/) · [Reviewer guide](docs/SPONSORPROOF_REVIEW.md) · [Contract](https://explorer-studio.genlayer.com/address/0x0235c7f7E646bA26532587aFED3108148C92Ef2f) · [Submission links](docs/SUBMISSION.md)
 
 Sponsors and organizers agree on plain-English commitments, exact public evidence URLs, payment weights and deadlines. The contract freezes wallet-bound publication evidence, obtains independently verified AI judgments and computes allocations in deterministic code. Shared appeals, immutable decision history and pull-based claims complete the workflow.
 

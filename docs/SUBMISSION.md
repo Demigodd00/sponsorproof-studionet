@@ -4,9 +4,9 @@ Use the dedicated repository in the **GitHub** field and the required **GitHub R
 
 https://github.com/Demigodd00/sponsorproof-studionet
 
-Use these deployment links once the replacement Site is confirmed live:
+Use these live deployment links:
 
-- Website: https://sponsorproof-studionet-wallet.prime-cake-6919.chatgpt.site/
+- Website: https://sponsorproof-studionet-wallet.esuspsychic.chatgpt.site/
 - Contract Link 1: https://explorer-studio.genlayer.com/address/0x0235c7f7E646bA26532587aFED3108148C92Ef2f
 
 Optional supporting evidence, in order:

@@ -25,7 +25,7 @@ The previous frontend requested accounts directly from `window.ethereum`, then a
 
 ## Required owner configuration
 
-WalletConnect QR/mobile support is conditional on an owner-provided Reown project ID. Set `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` to the project's public 32-character identifier before building. This is not a private key. Allow the exact replacement production origin `https://sponsorproof-studionet-wallet.prime-cake-6919.chatgpt.site` in the project's origin settings; add localhost separately only for development.
+WalletConnect QR/mobile support is conditional on an owner-provided Reown project ID. Set `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` to the project's public 32-character identifier before building. This is not a private key. Allow the exact replacement production origin `https://sponsorproof-studionet-wallet.esuspsychic.chatgpt.site` in the project's origin settings; add localhost separately only for development.
 
 Without a valid identifier, the app enables injected wallets only and visibly explains the limitation. It does not initialize WalletConnect with a placeholder or someone else's ID. No support for every possible wallet or every custom-chain capability is claimed.
 
@@ -33,6 +33,6 @@ RainbowKit setup: https://rainbowkit.com/docs/installation
 
 ## Publication status
 
-**Deployment in progress.** The original Site ID is inaccessible from the current account. A new public SponsorProof Site (`appgprj_6abd3cd265288191a45c1a6fa11e4122`) was created, and its source version 1 was saved from commit `f9c23dcba6612f88a1ef9dfd8cede6a0b4112267`. The original Site URL will not receive this update. The live contract and existing demo records are unchanged.
+**Published at the replacement URL:** https://sponsorproof-studionet-wallet.esuspsychic.chatgpt.site/. The original Site ID is inaccessible from the current account. New public SponsorProof Site `appgprj_6abd3cd265288191a45c1a6fa11e4122` deployed its source version 1 from commit `f9c23dcba6612f88a1ef9dfd8cede6a0b4112267` on 30 September 2026. The original Site URL did not receive this update. The live contract and existing demo records are unchanged.
 
-Do not resubmit a claim that the public wallet flow is fixed until this version is published and verified. Final live acceptance should include a real extension-wallet connection, account/network switching, disconnect/reconnect, and (once configured) a WalletConnect mobile connection on StudioNet. These checks should not require transferring funds.
+The public page and agreement reads were verified at the new URL. Final wallet acceptance should include a real extension-wallet connection, account/network switching, disconnect/reconnect, and (once configured) a WalletConnect mobile connection on StudioNet. These checks should not require transferring funds.
