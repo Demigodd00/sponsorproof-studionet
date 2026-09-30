@@ -2,7 +2,7 @@
 
 GenLayer-native sponsorship fulfillment, evidence review and settlement on StudioNet.
 
-[Live app](https://sponsorproof-studionet.blazekingsley2.chatgpt.site/) · [Reviewer guide](docs/SPONSORPROOF_REVIEW.md) · [Contract](https://explorer-studio.genlayer.com/address/0x0235c7f7E646bA26532587aFED3108148C92Ef2f) · [Submission links](docs/SUBMISSION.md)
+[Replacement app](https://sponsorproof-studionet-wallet.prime-cake-6919.chatgpt.site/) · [Reviewer guide](docs/SPONSORPROOF_REVIEW.md) · [Contract](https://explorer-studio.genlayer.com/address/0x0235c7f7E646bA26532587aFED3108148C92Ef2f) · [Submission links](docs/SUBMISSION.md)
 
 Sponsors and organizers agree on plain-English commitments, exact public evidence URLs, payment weights and deadlines. The contract freezes wallet-bound publication evidence, obtains independently verified AI judgments and computes allocations in deterministic code. Shared appeals, immutable decision history and pull-based claims complete the workflow.
 
@@ -38,11 +38,11 @@ The integration tests only read existing state and finalized execution receipts.
 cd apps/sponsorproof-web
 npm ci
 npx tsc --noEmit --incremental false
-node --experimental-strip-types --test tests/protocol.test.mjs tests/receipts.test.mjs tests/receipts.live.test.mjs
+node --experimental-strip-types --test tests/protocol.test.mjs tests/receipts.test.mjs tests/receipts.live.test.mjs tests/wallets.test.mjs
 npm run build
 ```
 
-`npm run dev` starts the local UI. No application API secret is needed for public contract reads. Signing requires an injected StudioNet wallet. Do not run the deployment or seeding scripts merely to verify the published demo: those scripts can submit transactions. Existing journals are historical records, not templates to reset or overwrite.
+`npm run dev` starts the local UI. No application API secret is needed for public contract reads. Signing uses the selected StudioNet wallet; QR/mobile pairing additionally requires the owner's `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`. See [the wallet connection update](docs/WALLET_CONNECTION_FIX.md) for configuration, checks, and current publication status. Do not run the deployment or seeding scripts merely to verify the published demo: those scripts can submit transactions. Existing journals are historical records, not templates to reset or overwrite.
 
 ## Important boundaries
 
@@ -50,7 +50,7 @@ npm run build
 - Public text/HTML evidence and publication challenges establish limited source-control provenance, not factual truth, audience reach, originality or human identity.
 - Evidence and agreement text are public. Never provide secrets or private information.
 - Network and model availability may affect new transactions. Finality alone is not execution success.
-- The latest full dependency audit has six low/moderate development-tool findings; the runtime-only audit reported none. This is not a security certification.
+- The 30 September 2026 runtime dependency audit reports 23 moderate advisories, with no high or critical findings after updating Next.js to 16.3.8. This is not a security certification; the remaining advisories need compatible upstream wallet-dependency fixes.
 
 ## Repository provenance
 

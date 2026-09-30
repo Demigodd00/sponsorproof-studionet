@@ -1,16 +1,18 @@
 "use client";
 import {useCallback,useEffect,useRef,useState} from "react";
 import {Button} from "@/components/ui/button";
-import {ShieldCheck,Plus,RefreshCw,ArrowLeft,ArrowUpRight,Copy,Wallet as WalletIcon} from "lucide-react";
+import {ShieldCheck,Plus,RefreshCw,ArrowLeft,ArrowUpRight,Copy} from "lucide-react";
+import {useSponsorWallet,WalletControls,WalletHelp} from "@/components/wallet-controls";
 import * as api from "@/lib/sponsorproof";
-import type {Campaign,Commitment,Summary,Wallet} from "@/lib/sponsorproof";
+import type {Campaign,Commitment,Summary} from "@/lib/sponsorproof";
 const when=(n:number)=>n?new Date(n*1000).toLocaleString():"Not opened";
 const label=(v:string)=>v.replaceAll("_"," ").toLowerCase();
 const pendingKey="sponsorproof.pending:"+api.ADDRESS;
 
 export default function SponsorProofApp(){
  const[rows,setRows]=useState<Summary[]>([]),[total,setTotal]=useState(0),[offset,setOffset]=useState(0),[selected,setSelected]=useState<Campaign|null>(null);
- const[wallet,setWallet]=useState<Wallet|null>(null),[balance,setBalance]=useState("0"),[draft,setDraft]=useState(false),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false);
+ const {wallet,walletError,preparing,wrongChain}=useSponsorWallet();
+ const[balance,setBalance]=useState("0"),[draft,setDraft]=useState(false),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false);
  const[message,setMessage]=useState(""),[error,setError]=useState(""),[pending,setPending]=useState(""),[lastHash,setLastHash]=useState(""),[clock,setClock]=useState(()=>Date.now()/1000);
  const[statement,setStatement]=useState(""),[split,setSplit]=useState(""),[copied,setCopied]=useState("");
  const gate=useRef(false),revision=useRef(0),activeId=useRef("");
@@ -18,7 +20,6 @@ export default function SponsorProofApp(){
  useEffect(()=>{void refresh(0);return()=>{revision.current++;};},[wallet]);
  useEffect(()=>{const tick=setInterval(()=>setClock(Date.now()/1000),1000);return()=>clearInterval(tick);},[]);
  useEffect(()=>{const saved=sessionStorage.getItem(pendingKey);if(saved&&/^0x[0-9a-f]{64}$/i.test(saved)){setPending(saved);setLastHash(saved);setMessage("An earlier transaction needs a receipt check before another action.");}},[]);
- useEffect(()=>{if(!wallet)return;const invalidate=()=>{setWallet(null);setMessage("Wallet or network changed. Reconnect to sign further actions.");};wallet.provider.on?.("accountsChanged",invalidate);wallet.provider.on?.("chainChanged",invalidate);return()=>{wallet.provider.removeListener?.("accountsChanged",invalidate);wallet.provider.removeListener?.("chainChanged",invalidate);};},[wallet]);
  useEffect(()=>{const context=(document as Document&{modelContext?:{registerTool:(tool:unknown,options:{signal:AbortSignal})=>unknown}}).modelContext;if(!context?.registerTool)return;const lifecycle=new AbortController();try{void Promise.resolve(context.registerTool({name:"inspect_sponsorship_agreement",title:"Inspect agreement",description:"Read an on-chain agreement and show it in SponsorProof. Does not sign or submit transactions.",inputSchema:{type:"object",properties:{id:{type:"string",pattern:"^sp-[1-9][0-9]*$"}},required:["id"],additionalProperties:false},annotations:{readOnlyHint:true,untrustedContentHint:true},async execute(input:unknown){const v=input as {id?:unknown};if(!v||Object.keys(v).length!==1||typeof v.id!=="string"||!/^sp-[1-9][0-9]*$/.test(v.id))throw new Error("Expected a valid agreement id.");const c=await api.campaign(v.id);revision.current++;setSelected(c);activeId.current=c.id;setDraft(false);setLoading(false);return{id:c.id,status:c.status,organizer_allocation:c.organizer_allocation,sponsor_allocation:c.sponsor_allocation,held_atto:c.held_atto};}},{signal:lifecycle.signal})).catch(()=>{});}catch{/* Proposed browser API is optional. */}return()=>lifecycle.abort();},[]);
  async function checkReceipt(hash:string){const result=await api.receipt(hash);sessionStorage.removeItem(pendingKey);setPending("");if(result==="rejected"){setError("The finalized transaction was rejected. No successful state change is claimed. Inspect its receipt for details.");setMessage("");return false;}setMessage("Transaction finalized successfully on StudioNet.");await refresh();return true;}
  async function transact(method:string,args:unknown[],value=0n){if(gate.current||pending)return false;if(!wallet){setError("Connect your wallet first.");return false;}gate.current=true;setBusy(true);setError("");setMessage("Confirm the action in your wallet.");try{const hash=await api.submit(wallet,method,args,value);setPending(hash);setLastHash(hash);sessionStorage.setItem(pendingKey,hash);setMessage("Submitted. Waiting for validator agreement and finalization…");return await checkReceipt(hash);}catch(e){setError(api.errorText(e));return false;}finally{gate.current=false;setBusy(false);}}
@@ -26,7 +27,11 @@ export default function SponsorProofApp(){
  const c=selected,party=!!c&&!!wallet&&(api.same(wallet.address,c.sponsor)||api.same(wallet.address,c.organizer)),organizer=!!c&&api.same(wallet?.address,c.organizer),sponsor=!!c&&api.same(wallet?.address,c.sponsor),disabled=busy||!!pending||!wallet;
  const act=(method:string,args:unknown[]=c?[c.id]:[],value=0n)=>void transact(method,args,value);
  const latest=c?.history.at(-1),original=c?.history[0];
- return <main className="workspace"><header><a className="brand" href="/"><ShieldCheck size={28}/>SponsorProof<span>SP / 01</span></a><div className="actions"><span className="network">StudioNet · simulated GEN</span><Button variant="outline" disabled={busy} onClick={async()=>{setError("");try{setWallet(await api.connect());}catch(e){setError(api.errorText(e));}}}><WalletIcon size={16}/>{wallet?api.short(wallet.address):"Connect wallet"}</Button></div></header>
+ return <main className="workspace"><header><a className="brand" href="/"><ShieldCheck size={28}/>SponsorProof<span>SP / 01</span></a><div className="actions"><span className="network">StudioNet · simulated GEN</span><WalletControls disabled={busy}/></div></header>
+ <WalletHelp/>
+ {wrongChain&&<p className="notice" role="status">Your wallet is connected to another network. Choose “Switch to StudioNet” before signing.</p>}
+ {preparing&&<p className="notice" role="status">Checking the selected wallet and network…</p>}
+ {walletError&&<p className="notice error" role="alert">{walletError}</p>}
  <section className="mast"><div><p className="eyebrow">SPONSORSHIP OPERATIONS</p><h1>Promises, with proof.</h1><p>Agreed commitments. Frozen evidence. Transparent allocations.</p></div><div className="actions"><Button variant="outline" disabled={busy||loading} onClick={()=>void refresh()} aria-label="Refresh agreements"><RefreshCw size={17}/></Button><Button onClick={()=>setDraft(!draft)}><Plus size={17}/>New agreement</Button></div></section>
  {message&&<div className="notice" role="status">{message} {pending&&<Button variant="outline" disabled={busy} onClick={async()=>{if(gate.current)return;gate.current=true;setBusy(true);setError("");try{await checkReceipt(pending);}catch(e){setError(api.errorText(e));}finally{gate.current=false;setBusy(false);}}}>Check receipt</Button>}</div>}
  {error&&<div className="notice error" role="alert">{error}</div>}{lastHash&&<p className="muted">Latest transaction: <a href={`https://explorer-studio.genlayer.com/transactions/${lastHash}`} target="_blank" rel="noreferrer">{api.short(lastHash)} ↗</a></p>}
