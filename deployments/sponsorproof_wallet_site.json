@@ -1,0 +1,13 @@
+{
+  "project_id": "appgprj_6abd3cd265288191a45c1a6fa11e4122",
+  "version_id": "appgprj_6abd3cd265288191a45c1a6fa11e4122~appgver_c5dbdbfcf4a08191bc1e527ad5bf0eef",
+  "deployment_id": "appgdep_6abd4b32cf4c8191a1402cf610854b81",
+  "status": "succeeded",
+  "audience": "public",
+  "url": "https://sponsorproof-studionet-wallet.esuspsychic.chatgpt.site",
+  "source_commit": "d4955f0763234e13af6b691e16a9797dcec1af8d",
+  "updated_at": "2026-09-30T17:54:04.119844+00:00",
+  "original_site_url_unchanged": "https://sponsorproof-studionet.blazekingsley2.chatgpt.site",
+  "mobile_wallet_pairing_configured": false,
+  "live_wallet_signature_tested": false
+}

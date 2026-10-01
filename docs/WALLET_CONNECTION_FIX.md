@@ -33,6 +33,6 @@ RainbowKit setup: https://rainbowkit.com/docs/installation
 
 ## Publication status
 
-**Published at the replacement URL:** https://sponsorproof-studionet-wallet.esuspsychic.chatgpt.site/. The original Site ID is inaccessible from the current account. New public SponsorProof Site `appgprj_6abd3cd265288191a45c1a6fa11e4122` deployed its source version 1 from commit `f9c23dcba6612f88a1ef9dfd8cede6a0b4112267` on 30 September 2026. The original Site URL did not receive this update. The live contract and existing demo records are unchanged.
+**Published at the replacement URL:** https://sponsorproof-studionet-wallet.esuspsychic.chatgpt.site/. The original Site ID is inaccessible from the current account. New public SponsorProof Site `appgprj_6abd3cd265288191a45c1a6fa11e4122` deployed source version 2 from commit `d4955f0763234e13af6b691e16a9797dcec1af8d` on 30 September 2026. Version 2 corrects the app metadata and submission links to the actual published origin. See `deployments/sponsorproof_wallet_site.json` for the deployment identifiers. The original Site URL did not receive this update. The live contract and existing demo records are unchanged.
 
 The public page and agreement reads were verified at the new URL. Final wallet acceptance should include a real extension-wallet connection, account/network switching, disconnect/reconnect, and (once configured) a WalletConnect mobile connection on StudioNet. These checks should not require transferring funds.
